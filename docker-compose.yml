@@ -4,9 +4,22 @@ services:
     image: mysql:8.0
     container_name: android-database
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: android-databse
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
     ports:
       - "3306:3306"
+  android-service:
+      build: .
+      container_name: android-database-service
+      ports:
+        - "3000:3000"
+      depends_on:
+        - mysql
+      environment:
+        DB_HOST: mysql
+        DB_PORT: 3306
+        DB_USERNAME: user
+        DB_PASSWORD: password
+        DB_NAME: android-databse
